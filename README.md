@@ -4,15 +4,6 @@ This repository showcases a progressive integration of the PayPal Checkout syste
 
 ---
 
-## Repository Structure
-paypal-integration-demo/
-│
-├── paypal-phase-1/       # Basic Smart Payment Buttons (Frontend only)
-├── paypal-phase-2/       # Unified checkout with PayPal + Card (Frontend + Backend)
-├── paypal-phase-3/       # Refund system for completed transactions (Builds on Phase 2)
-└── README.md             # Main repository documentation
----
-
 ## How to Use
 
 Each phase is self-contained. Start with Phase 1 and move forward:
