@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Unleaded - Review Order</title>
+</head>
+<body>
+  <h1>Review Your Order</h1>
+  <div id="shipping-info"></div>
+  <div id="total-info"></div>
+  <button id="confirm-btn">Confirm and Pay</button>
+
+  <script>
+    const orderID = new URLSearchParams(window.location.search).get("orderID");
+
+    async function loadOrder() {
+      const res = await fetch(`http://localhost:4000/api/get-order/${orderID}`);
+      const data = await res.json();
+
+      const address = data.shipping;
+      const postal = address.postal_code;
+
+      // Display shipping address
+      document.getElementById('shipping-info').innerHTML = `
+        <p><strong>Shipping to:</strong></p>
+        <p>${address.address_line_1 || ''}, ${address.admin_area_2}, ${address.admin_area_1}</p>
+        <p>${address.postal_code}, ${address.country_code}</p>
+      `;
+
+      // Update shipping based on postal code
+      await fetch(`http://localhost:4000/api/update-shipping/${orderID}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ postalCode: postal })
+      });
+
+      const newTotal = postal.startsWith('9') ? '55.00' : '50.00';
+      const shippingCost = postal.startsWith('9') ? '10.00' : '5.00';
+
+      document.getElementById('total-info').innerHTML = `
+        <p><strong>Updated Shipping:</strong> $${shippingCost}</p>
+        <p><strong>Total:</strong> $${newTotal}</p>
+      `;
+    }
+
+    document.getElementById('confirm-btn').addEventListener('click', async () => {
+      const res = await fetch(`http://localhost:4000/api/capture-order/${orderID}`, {
+        method: 'POST'
+      });
+      const result = await res.json();
+      alert(`Payment captured! Order ID: ${result.orderID}`);
+      console.log("Debug ID:", result.debugId);
+    });
+
+    loadOrder();
+  </script>
+</body>
+</html>

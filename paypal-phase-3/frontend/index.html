@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Unleaded Checkout</title>
+  <script src="https://www.paypal.com/sdk/js?client-id=ARnCTMgYhJ1Y0w4FS8i1XsUf97-BE7ecITsX54Q3Yf9aMDRW_a0rNVbbtlZvZ-y4JmbAdOJjHmyO3MK4&components=buttons,card-fields&currency=USD&intent=capture"></script>
+</head>
+<body>
+  <h1>Unleaded Checkout</h1>
+
+  <form id="buyer-form">
+    <label>Full Name:<br /><input type="text" id="name" /></label><br /><br />
+    <label>Email:<br /><input type="email" id="email" /></label><br /><br />
+    <label>Address Line 1:<br /><input type="text" id="address1" /></label><br /><br />
+    <label>City:<br /><input type="text" id="city" /></label><br /><br />
+    <label>Postal Code:<br /><input type="text" id="postal" /></label><br /><br />
+    <label>Country Code:<br /><input type="text" id="country" value="US" /></label><br /><br />
+    <button type="submit">Continue to Payment</button>
+  </form>
+
+  <div id="payment-section" style="display:none; margin-top: 2rem;">
+    <div id="paypal-button-container"></div>
+    <div id="card-button-container" style="margin-top: 2rem;"></div>
+  </div>
+<div style="margin-top: 3rem;">
+ <button onclick="window.location.href='/refund.html'" style="padding: 0.6rem 1.2rem; font-size: 1rem; cursor: pointer;">
+  Go to Refund Page
+</button>
+</div>
+  <script src="index.js"></script>
+</body>
+</html>

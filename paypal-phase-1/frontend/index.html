@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Unleaded - Checkout</title>
+  <script src="https://www.paypal.com/sdk/js?client-id=ARnCTMgYhJ1Y0w4FS8i1XsUf97-BE7ecITsX54Q3Yf9aMDRW_a0rNVbbtlZvZ-y4JmbAdOJjHmyO3MK4&currency=USD&disable-funding=card"></script>
+</head>
+<body>
+  <h1>Buy a T-Shirt - $45.00 + Shipping</h1>
+  <div id="paypal-button-container"></div>
+
+  <script>
+    paypal.Buttons({
+      createOrder: () => fetch('http://localhost:4000/api/create-order', {
+        method: 'POST'
+      }).then(res => res.json()).then(data => data.id),
+
+      onApprove: (data) => {
+        window.location.href = `review.html?orderID=${data.orderID}`;
+      }
+    }).render('#paypal-button-container');
+  </script>
+</body>
+</html>
